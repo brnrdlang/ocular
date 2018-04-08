@@ -2,23 +2,26 @@ module Main where
 
 import System.Environment
 import Codec.Picture
-
+import Data.Array.Repa
 
 import Data.Array.Colour.LinearRGB
 
-convert :: Either String DynamicImage -> Either String HDRImage
-convert (Right img) = Right (fromImage img)
-convert (Left s) = Left s
-
-convertBack :: Either String HDRImage -> Either String (Image PixelRGB8)
-convertBack (Right hdr) = Right (toImage hdr)
-convertBack (Left s) = Left s
+process :: HDRImage -> HDRImage
+--process img = Data.Array.Repa.map (\x -> 0.5*x+0.25) img
+process img = fromFunction (extent img) flipImg
+  where
+    (Z :. h :. _ :. 3) = extent img
+    flipImg (Z :. y :. x :. c) = img ! (Z :. h-y-1 :. x :. c)
 
 main :: IO ()
 main = do
   args <- getArgs
   filename <- return (head args)
-  img <- readImage filename
-  hdr <- return (convert img)
-  other_img <- return (convertBack hdr)
-  putStrLn "Done."
+  input_img <- readImage filename
+  case input_img of
+    Left s -> putStrLn s
+    Right img ->
+      let
+        hdr = process (fromImage img)
+        other_img = toImage hdr
+      in writePng "flipped.png" other_img

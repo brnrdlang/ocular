@@ -20,9 +20,9 @@ fromImage (JP.ImageRGBF img) = fromImageHDR img
 fromImage img = fromImageRGB (JP.convertRGB8 img)
 
 takeOne :: (a, a, a) -> Int -> a
-takeOne (x, _, _) 1 = x
-takeOne (_, x, _) 2 = x
-takeOne (_, _, x) 3 = x
+takeOne (x, _, _) 0 = x
+takeOne (_, x, _) 1 = x
+takeOne (_, _, x) 2 = x
 takeOne _ _ = error "Index out of range."
 
 fromImageRGB :: JP.Image JP.PixelRGB8 -> HDRImage
@@ -47,22 +47,22 @@ toImage hdrimg = JP.generateImage gen width height
     Z :. height :. width :. _ = extent hdrimg
     clamp v
         | v < 0.0 = 0
-        | v <= 1.0 = floor(255 * sRGB v)
+        | v <= 1.0 = round(255 * sRGB v)
         | otherwise = 255
     gen x y = 
-        let r = clamp (hdrimg ! (Z :. x :. y :. 0))
-            b = clamp (hdrimg ! (Z :. x :. y :. 1))
-            g = clamp (hdrimg ! (Z :. x :. y :. 2))
+        let r = clamp (hdrimg ! (Z :. y :. x :. 0))
+            g = clamp (hdrimg ! (Z :. y :. x :. 1))
+            b = clamp (hdrimg ! (Z :. y :. x :. 2))
         in JP.PixelRGB8 r g b
 
 toRGBF :: HDRImage -> JP.Image JP.PixelRGBF
 toRGBF hdr = JP.generateImage gen width height
   where
-    Z :. height :. width :. _ = extent hdrimg
+    Z :. height :. width :. _ = extent hdr
     gen x y =
-      let r = hdr ! (Z :. x :. y :. 0)
-          g = hdr ! (Z :. x :. y :. 1)
-          b = hdr ! (Z :. x :. y :. 2)
+      let r = hdr ! (Z :. y :. x :. 0)
+          g = hdr ! (Z :. y :. x :. 1)
+          b = hdr ! (Z :. y :. x :. 2)
       in JP.PixelRGBF r g b
 
 sRGB :: Float -> Float
