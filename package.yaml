@@ -1,0 +1,27 @@
+name: ocular
+version: 0.1.0.0
+synopsis: A graphics library for human vision
+description: See README at <https://github.com/brnrdlang/ocular#readme>
+maintainer: Bernhard Lang <sol@typeful.net>
+license: MIT
+github: brnrdlang/ocular
+category: Graphics
+
+ghc-options: -Wall
+
+dependencies:
+  - base >= 4.9 && < 5
+  - JuicyPixels
+  - repa
+  - repa-algorithms
+
+library:
+  source-dirs: src
+  exposed-modules:
+    - Data.Array.Colour.LinearRGB
+
+executable:
+  main: Main.hs
+  source-dirs: examples
+  dependencies:
+    - ocular
