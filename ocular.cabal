@@ -1,20 +1,55 @@
-name:                ocular
-version:             0.1.0.0
--- synopsis:
--- description:
-homepage:            https://github.com/githubuser/ocular#readme
-license:             BSD3
-license-file:        LICENSE
-author:              Author name here
-maintainer:          example@example.com
-copyright:           2018 Author name here
-category:            Web
-build-type:          Simple
-cabal-version:       >=1.10
-extra-source-files:  README.md
+-- This file has been generated from package.yaml by hpack version 0.27.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: e21fa060ba95f95ea5cb413ec23e9f66664a25bfa9631485a4cdd9932dcbd77d
+
+name:           ocular
+version:        0.1.0.0
+synopsis:       A graphics library for human vision
+description:    See README at <https://github.com/brnrdlang/ocular#readme>
+category:       Graphics
+homepage:       https://github.com/brnrdlang/ocular#readme
+bug-reports:    https://github.com/brnrdlang/ocular/issues
+maintainer:     Bernhard Lang <sol@typeful.net>
+license:        MIT
+license-file:   LICENSE
+build-type:     Simple
+cabal-version:  >= 1.10
+
+source-repository head
+  type: git
+  location: https://github.com/brnrdlang/ocular
+
+library
+  exposed-modules:
+      Data.Array.Colour.LinearRGB
+  other-modules:
+      Data.Array.Colour.CIE
+      Data.Array.Colour.LMS
+      Data.Array.Colour.Radiance
+      Paths_ocular
+  hs-source-dirs:
+      src
+  ghc-options: -Wall
+  build-depends:
+      JuicyPixels
+    , base >=4.9 && <5
+    , repa
+    , repa-algorithms
+  default-language: Haskell2010
 
 executable ocular
-  hs-source-dirs:      src
-  main-is:             Main.hs
-  default-language:    Haskell2010
-  build-depends:       base >= 4.7 && < 5
+  main-is: Main.hs
+  other-modules:
+      Paths_ocular
+  hs-source-dirs:
+      examples
+  ghc-options: -Wall
+  build-depends:
+      JuicyPixels
+    , base >=4.9 && <5
+    , ocular
+    , repa
+    , repa-algorithms
+  default-language: Haskell2010
