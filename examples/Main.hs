@@ -2,17 +2,11 @@ module Main where
 
 import System.Environment
 import Codec.Picture
-import Data.Array.Repa
 
 import Data.Array.Colour.LinearRGB
+import Vision.Human.Algorithms
 
-process :: HDRImage -> HDRImage
---process img = Data.Array.Repa.map (\x -> 0.5*x+0.25) img
-process img = fromFunction (extent img) flipImg
-  where
-    (Z :. h :. _ :. 3) = extent img
-    flipImg (Z :. y :. x :. c) = img ! (Z :. h-y-1 :. x :. c)
-
+import qualified Data.Array.Repa as RP
 main :: IO ()
 main = do
   args <- getArgs
@@ -22,6 +16,13 @@ main = do
     Left s -> putStrLn s
     Right img ->
       let
-        hdr = process (fromImage img)
-        other_img = toImage hdr
-      in writePng "flipped.png" other_img
+        hdr = RP.map ((0.5+) . (0.5*)) $ michelson_filter $ fromImage img
+        srgb = toImage hdr
+      in writePng "michelson.png" srgb
+  case input_img of
+    Left s -> putStrLn s
+    Right img ->
+      let
+        hdr = RP.map ((0.5+) . (0.5*)) $ edge_detect $ fromImage img
+        srgb = toImage hdr
+      in writePng "simple_edge.png" srgb

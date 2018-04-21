@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: e21fa060ba95f95ea5cb413ec23e9f66664a25bfa9631485a4cdd9932dcbd77d
+-- hash: 7c5a4be168c2426df4df22f135b559d3043ed97d635272060dee7605fd2ac662
 
 name:           ocular
 version:        0.1.0.0
@@ -11,7 +11,7 @@ description:    See README at <https://github.com/brnrdlang/ocular#readme>
 category:       Graphics
 homepage:       https://github.com/brnrdlang/ocular#readme
 bug-reports:    https://github.com/brnrdlang/ocular/issues
-maintainer:     Bernhard Lang <sol@typeful.net>
+maintainer:     Bernhard Lang <collurio229@gmx.de>
 license:        MIT
 license-file:   LICENSE
 build-type:     Simple
@@ -24,6 +24,7 @@ source-repository head
 library
   exposed-modules:
       Data.Array.Colour.LinearRGB
+      Vision.Human.Algorithms
   other-modules:
       Data.Array.Colour.CIE
       Data.Array.Colour.LMS

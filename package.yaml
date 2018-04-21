@@ -2,7 +2,7 @@ name: ocular
 version: 0.1.0.0
 synopsis: A graphics library for human vision
 description: See README at <https://github.com/brnrdlang/ocular#readme>
-maintainer: Bernhard Lang <sol@typeful.net>
+maintainer: Bernhard Lang <collurio229@gmx.de>
 license: MIT
 github: brnrdlang/ocular
 category: Graphics
@@ -19,7 +19,7 @@ library:
   source-dirs: src
   exposed-modules:
     - Data.Array.Colour.LinearRGB
-
+    - Vision.Human.Algorithms
 executable:
   main: Main.hs
   source-dirs: examples
